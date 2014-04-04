@@ -2,3 +2,5 @@
 simonekookt/fixtures/
 *.pyc
 db.sqlite3
+.bowerrc
+bower.json
