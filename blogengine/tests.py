@@ -1,5 +1,8 @@
 from django.test import TestCase, LiveServerTestCase, Client
 from django.utils import timezone
+
+import markdown
+
 from blogengine.models import Post
 
 
@@ -163,11 +166,15 @@ class AdminTest(LiveServerTestCase):
         self.assertEquals(response.status_code, 200)
 
         # Check deleted successfully
-        self.assertTue('deleted successfully' in response.content)
+        self.assertTrue('deleted successfully' in response.content)
 
         # Check post amended
         all_posts = Post.objects.all()
         self.assertEquals(len(all_posts), 0)
+
+    def test_create_post(self):
+        # log in
+        self.client.login(username='bobsmith', password='password')
 
 
 class PostViewTest(LiveServerTestCase):
@@ -178,7 +185,7 @@ class PostViewTest(LiveServerTestCase):
         # Create the post
         post = Post()
         post.title = 'My first post'
-        post.text = 'This is my first blog post'
+        post.text = 'This is [my first blog post](http://127.0.0.1:8000/)'
         post.pub_date = timezone.now()
         post.save()
 
@@ -200,3 +207,6 @@ class PostViewTest(LiveServerTestCase):
         self.assertTrue(str(post.pub_date.year) in response.content)
         self.assertTrue(post.pub_date.strftime('%b') in response.content)
         self.assertTrue(str(post.pub_date.day) in response.content)
+
+        # Check the link is marked up properly
+        self.assertTrue('<a href="http:127.0.0.1:8000/">my first blog post</a>' in response.content)
