@@ -44,6 +44,7 @@ class Category(models.Model):
 class Post(models.Model):
     title = models.CharField(max_length=200)
     pub_date = models.DateTimeField()
+    front_page_text = models.CharField(max_length=400)
     text = models.TextField()
     slug = models.SlugField(max_length=40, unique=True)
     author = models.ForeignKey(User)

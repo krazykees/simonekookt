@@ -7,7 +7,7 @@ urlpatterns = patterns('',
     # Index
     url(r'^(?P<page>\d+)?/?$', ListView.as_view(
         model=Post,
-        paginate_by=5,
+        paginate_by=3,
         )),
 
     # Individual posts
