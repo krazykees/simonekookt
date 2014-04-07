@@ -1,11 +1,11 @@
 from django.conf.urls import patterns, url
 from django.views.generic import ListView, DetailView
 from blogengine.models import Category, Post, Tag
-from blogengine.views import CategoryListView, TagListView
+from blogengine.views import CategoryListView, TagListView, PostsFeed
 
 urlpatterns = patterns('',
     # Index
-    url('^(?P<page>\d+)?/?$', ListView.as_view(
+    url(r'^(?P<page>\d+)?/?$', ListView.as_view(
         model=Post,
         paginate_by=5,
         )),
@@ -16,13 +16,17 @@ urlpatterns = patterns('',
         )),
 
     # Categories
-    url(r'^category/(?P<slug>[a-zA-z0-9-]+)/?$', CategoryListView.as_view(
+    url(r'^category/(?P<slug>[a-zA-Z0-9-]+)/?$', CategoryListView.as_view(
         paginate_by=5,
         model=Category,
-    )),
+        )),
 
-    url(r'^tag.(?P<slug>[a-zA-z0-9-]+)/?$', TagListView.as_view(
+    # Tags
+    url(r'^tag/(?P<slug>[a-zA-Z0-9-]+)/?$', TagListView.as_view(
         paginate_by=5,
         model=Tag,
-    ))
+        )),
+
+    # Post RSS feed
+    url(r'^feeds/posts/$', PostsFeed()),
 )
