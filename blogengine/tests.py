@@ -391,6 +391,9 @@ class PostViewTest(BaseAcceptanceTest):
         # Check the post text is in the response
         self.assertTrue(markdown.markdown(post.text) in response.content)
 
+        # Check the post category is in the response
+        self.assertTrue(post.category.name in response.content)
+
         # Check the post date is in the response
         self.assertTrue(str(post.pub_date.year) in response.content)
         self.assertTrue(post.pub_date.strftime('%b') in response.content)
@@ -443,6 +446,9 @@ class PostViewTest(BaseAcceptanceTest):
         # Check the post title is in the response
         self.assertTrue(post.title in response.content)
 
+        # Check the post category is in the response
+        self.assertTrue(post.category.name in response.content)
+
         # Check the post text is in the response
         self.assertTrue(markdown.markdown(post.text) in response.content)
 
@@ -453,6 +459,50 @@ class PostViewTest(BaseAcceptanceTest):
 
         # Check the link is marked up properly
         self.assertTrue('<a href="http://127.0.0.1:8000/">my first blog post</a>' in response.content)
+
+        def test_category_page(self):
+            # Create the category
+            category = Category()
+            category.name = 'python'
+            category.description = 'The Python programming language'
+            category.save()
+
+            # Create the author
+            author = User.objects.create_user('testuser', 'user@example.com', 'password')
+            author.save
+
+            # Create the site
+            site = Site()
+            site.name = 'example.com'
+            site.domain = 'example.com'
+            site.save()
+
+            # Check new post saved
+            all_posts = Post.objects.all()
+            self.assertEquals(len(all_posts), 1)
+            only_post = all_post[0]
+            self.assertEquals(only_post, post)
+
+            # Get the category URL
+            category_url = post.category.get_absolute_url()
+
+            # Fetch the category
+            response = self.client.get(category_url)
+            self.assertEquals(response.status_code, 200)
+
+            # Check the category name is in the response
+            self.assertTrue(post.category.name in response.content)
+
+            # Check the post text is in the response
+            self.assertTrue(markdown.markdown(post.text) in response.content)
+
+            # Check the post date is in the response
+            self.assertTrue(str(post.pub_date.year) in response.content)
+            self.assertTrue(str(post.pub_date.strftime('%b')) in response.content)
+            self.assertTrue(str(post.pub_date.day) in response.content)
+
+            # Check the link is marked up properly
+            self.assertTrue('<a href="http://127.0.0.1:8000/">my first blog post</a>' in response.content)
 
 
 class FlatPageViewTest(BaseAcceptanceTest):
