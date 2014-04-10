@@ -20,7 +20,14 @@
         <link href="//netdna.bootstrapcdn.com/font-awesome/4.0.3/css/font-awesome.min.css" rel="stylesheet">
         <link rel="stylesheet" href="{% static 'bower_components/ihover/src/ihover.min.css' %}">
         <script src="{% static 'bower_components/html5-boilerplate/js/vendor/modernizr-2.6.2.min.js' %}"></script>
-
+        <script type="text/javascript">
+            function show(target){
+            document.getElementById(target).style.display = 'block';
+            }
+            function hide(target){
+            document.getElementById(target).style.display = 'none';
+            }
+        </script>
         <style type="text/css">
 		#home {
 			background: url({% static 'custom/parallax/images/shrooms.jpg' %}) 50% 0 fixed;
