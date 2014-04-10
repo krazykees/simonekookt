@@ -92,3 +92,8 @@ TEMPLATE_DIRS = [os.path.join(BASE_DIR, 'templates')]
 
 # Sites
 SITE_ID = 1
+
+# Heroku
+import dj_database_url
+if os.getcwd() == "/app":
+    DATABASES = {'default': dj_database_url.config(default='postgres://localhost')}
