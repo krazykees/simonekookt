@@ -98,10 +98,9 @@ import dj_database_url
 if os.getcwd() == "/app":
     DATABASES = {'default': dj_database_url.config(default='postgres://localhost')}
 
-
 STATIC_ROOT = 'staticfiles'
 STATIC_URL = '/static/'
 
 STATICFILES_DIRS = (
-    os.path.join(BASE_DIR, 'blogengine', 'static'),
+    os.path.join(BASE_DIR,'blogengine', 'static'),
 )
