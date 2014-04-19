@@ -1,1 +1,1 @@
-web: gunicorn simonokookt.wsgi
+web: gunicorn simonekookt.wsgi
